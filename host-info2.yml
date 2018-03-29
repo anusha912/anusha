@@ -1,0 +1,36 @@
+---
+
+- hosts: localhost
+  gather_facts: True
+  connection: local
+  tasks:
+    # gather OS info of host using shell module
+    - name: shell module to gather os info
+      shell: cat /etc/redhat-release
+      register: os_info
+
+    # gather list of packages installed on host
+    - name: shell module to gather installed packages on host
+      shell: rpm -qa
+      register: packages_list
+
+    # gather kernel version from host using shell module
+    - name: shell module to gather kernel details
+      shell: uname -r
+      register: kernel_info
+
+    # print OS info of host using debug module
+    - name: print OS info of host
+      debug:
+        var: os_info.stdout
+
+    # print kernel version of host using debug module
+    - name: print kernel version
+      debug:
+        var: kernel_info.stdout
+
+    # print list of packages using debug module
+    - name: print packages installed on host
+      debug:
+        var: packages_list.stdout_lines
+

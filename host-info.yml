@@ -1,0 +1,26 @@
+---
+
+- hosts: localhost
+  gather_facts: True
+  connection: local
+  tasks:
+    # debug module to print OS version from facts
+    - name: print OS info of host
+      debug:
+        msg: OS details of host are {{ ansible_distribution }}- {{ ansible_distribution_version }}
+
+    # debug module to print kernel version of host from facts
+    - name: Print patch info (kernel details) of host
+      debug:
+        msg: Kernel version is {{ ansible_kernel }}
+
+    # yum module to list packages installed on host
+    - name: List out packages installed on host using yum module
+      yum:
+        list: installed
+      register: packages_list
+
+    # print list of packages
+    - name: Print packages installed on host
+      debug:
+        var: packages_list
